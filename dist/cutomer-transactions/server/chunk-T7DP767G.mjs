@@ -1,2 +1,0 @@
-import './polyfills.server.mjs';
-import{Va as i,W as o,Wa as a,lb as r,tb as s}from"./chunk-4EBUD3XU.mjs";import"./chunk-VVCT4QZE.mjs";var c=(()=>{let e=class e{};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=o({type:e,selectors:[["app-not-found"]],standalone:!0,features:[s],decls:2,vars:0,template:function(n,d){n&1&&(i(0,"p"),r(1,"not-found works!"),a())}});let t=e;return t})();export{c as NotFoundComponent};

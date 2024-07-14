@@ -1,0 +1,143 @@
+@if (AllCustomers&& AllTransactions) {
+<section>
+  <div class="container my-3">
+    <p class="text-center h4">
+      All Customers Using
+      <a href="https://getbootstrap.com/" target="_blank" class="text-secondary"
+        >Bootstrap</a
+      >
+    </p>
+    <div class="row mb-3 justify-content-between">
+      <div class="col-lg-6 mb-3 mb-lg-0">
+        <div class="card shadow p-3">
+          <p class="h3 d-flex justify-content-evenly align-items-center">
+            <span class="text-uppercase">
+              <i class="pi pi-users fs-4"></i> total customers:</span
+            >
+            <span>{{ AllCustomers.length }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6 mb-3 mb-lg-0">
+        <div class="card shadow p-3">
+          <p class="h3 d-flex justify-content-evenly align-items-center">
+            <span class="text-uppercase">
+              <i class="pi pi-credit-card fs-4"></i> total transactions:</span
+            >
+            <span>{{ AllTransactions.length }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3 justify-content-between">
+      <div class="col-lg-6 mb-3 mb-lg-0 px-4">
+        <input
+          [(ngModel)]="SearchFeildNameAndId"
+          type="search"
+          class="form-control"
+          placeholder="Search By Name or ID"
+        />
+      </div>
+      <div class="col-lg-6 mb-3 mb-lg-0 px-4">
+        <input
+          [(ngModel)]="SearchFeildAmount"
+          type="search"
+          class="form-control"
+          placeholder="Search By Amount"
+        />
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table text-center align-middle table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Transactions</th>
+            <th>Statics</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (customer of
+          AllCustomers|transactionsnameandid:SearchFeildNameAndId; track $index)
+          {
+          <tr>
+            <td class="text-nowrap fw-bold">{{ customer.id }}</td>
+            <td class="text-nowrap fw-bold">{{ customer.name }}</td>
+            <td class="text-nowrap fw-bold">
+              <button
+                (click)="HandleCustomerData(customer)"
+                (click)="toggleLightBox()"
+                class="btn btn-outline-primary text-uppercase"
+              >
+                <i class="pi pi-chart-bar fs-4 mx-1"></i>
+                Statics
+              </button>
+            </td>
+            <td>
+              <table class="table shadow-lg text-center">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (transactions of
+                  AllTransactions|transactionAmount:SearchFeildAmount; track
+                  $index) { @if (transactions.customer_id == customer.id) {
+                  <tr>
+                    <td class="text-nowrap">{{ transactions.id }}</td>
+                    <td class="text-nowrap">
+                      {{ transactions.amount | currency }}
+                    </td>
+                    <td class="text-nowrap">
+                      {{ transactions.date | date : "MM-dd-yyyy" }}
+                    </td>
+                  </tr>
+                  } }
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+}
+<!-- Statics LightBox -->
+@if (isLightBoxOpen) {
+<!-- @if (true) { -->
+<div (click)="toggleLightBox()" class="LightBoxContainer">
+  <div
+    (click)="StopProp($event)"
+    class="LightBoxContent overflow-scroll card position-relative"
+  >
+    <button
+      (click)="toggleLightBox()"
+      class="btn-close position-absolute top-0 end-0 m-2"
+    ></button>
+    <div class="h-100 w-100 p-4">
+      <div class="text-center chart-container shadow-lg p-4 rounded-3">
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [results]="currentCustomer"
+          [legendTitle]="'اجمالي الاحصائيات'"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [gradient]="true"
+          [showDataLabel]="true"
+          [animations]="false"
+        >
+        </ngx-charts-bar-vertical>
+      </div>
+    </div>
+  </div>
+</div>
+}

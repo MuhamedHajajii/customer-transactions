@@ -10,14 +10,20 @@ export const routes: Routes = [
         (e) => e.BlankLayoutComponent
       ),
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      // home component
+      { path: '', redirectTo: 'all-transactions', pathMatch: 'full' },
       {
-        path: 'home',
+        path: 'all-transactions',
         loadComponent: () =>
-          import('./pages/blank-layout/home/home.component').then(
-            (e) => e.HomeComponent
-          ),
+          import(
+            './pages/blank-layout/all-transactions/all-transactions.component'
+          ).then((e) => e.AllTransactionsComponent),
+      },
+      {
+        path: 'all-customers',
+        loadComponent: () =>
+          import(
+            './pages/blank-layout/all-customers/all-customers.component'
+          ).then((e) => e.AllCustomersComponent),
       },
     ],
   },

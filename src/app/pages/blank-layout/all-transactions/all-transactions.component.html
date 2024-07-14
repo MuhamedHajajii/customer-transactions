@@ -1,0 +1,79 @@
+@if (customerTransactions) {
+<section class="my-2 primeng-container">
+  <h2 class="text-center my-2">
+    <span class="border-bottom border-3 text-uppercase"
+      >All Customers Transactions Using
+      <a href="https://primeng.org/table" target="_blank" class="text-secondary"
+        >PrimeNg</a
+      ></span
+    >
+  </h2>
+  <div class="d-flex justify-content-end align-items-center mb-2">
+    <button class="btn btn-secondary mx-2" (click)="clearSort()">
+      <i class="pi pi-filter-slash"></i>
+    </button>
+    <div class="position-relative">
+      <i
+        class="pi pi-search position-absolute end-0 top-50 translate-middle"
+      ></i>
+      <input
+        [(ngModel)]="searchValue"
+        pInputText
+        placeholder="Search By Name or ID"
+        class="form-control"
+        type="text"
+        field="customer.name"
+        (input)="onGlobalFilter(TransctionsTable, $event)"
+      />
+    </div>
+  </div>
+
+  <p-table
+    #TransctionsTable
+    [value]="customerTransactions"
+    [tableStyle]="{ 'min-width': 'max-content' }"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 20]"
+    [globalFilterFields]="['customer.name', 'transaction.id']"
+    styleClass="p-datatable-striped text-center"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 10%">ID</th>
+        <th
+          [pSortableColumnDisabled]="true"
+          pSortableColumn="customer.name"
+          style="width: 30%"
+        >
+          Name
+        </th>
+        <th pSortableColumn="transaction.amount" style="width: 30%">
+          Amount <p-sortIcon field="transaction.amount" />
+          <p-columnFilter
+            type="numeric"
+            field="transaction.amount"
+            display="menu"
+            currency="USD"
+          />
+        </th>
+        <th pSortableColumn="transaction.date" style="width: 30%">
+          Date <p-sortIcon field="transaction.date" />
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customerTransactions>
+      <tr>
+        <td class="text-center">{{ customerTransactions.transaction.id }}</td>
+        <td class="text-center">{{ customerTransactions.customer.name }}</td>
+        <td class="text-center">
+          {{ customerTransactions.transaction.amount | currency }}
+        </td>
+        <td class="text-center">
+          {{ customerTransactions.transaction.date | date : "MM/dd/yyyy" }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</section>
+}

@@ -1,5 +1,13 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container">
+    <a routerLink="/all-transactions"
+      ><img
+        src="assets/logo.jpg"
+        class="rounded-circle"
+        width="50"
+        height="50"
+        alt="route logo"
+    /></a>
     <button
       class="navbar-toggler d-lg-none"
       type="button"
@@ -12,22 +20,23 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavId">
-      <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+      <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
         <li class="nav-item">
           <a
-            class="nav-link text-uppercase"
-            routerLinkActive="active fw-bolder"
-            href="#"
-            >primeng</a
-          >
+            class="nav-link text-uppercase fw-semibold mx-2"
+            routerLinkActive="active fw-bold"
+            routerLink="/all-customers"
+            >All Cutomers
+            <i class="pi pi-users"></i>
+          </a>
         </li>
         <li class="nav-item">
           <a
-            class="nav-link text-uppercase"
-            routerLinkActive="active fw-bolder"
-            href="#"
-            >bootstrap</a
-          >
+            class="nav-link text-uppercase fw-semibold mx-2"
+            routerLinkActive="active fw-bold"
+            routerLink="/all-transactions"
+            >All Transactions <i class="pi pi-paypal"></i
+          ></a>
         </li>
       </ul>
     </div>
