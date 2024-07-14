@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "start": "concurrently \"ng serve\" \"json-server --watch db/db.json --port 3000\"",
+    "build": "ng build --prod",
     "test": "ng test",
-    "serve:ssr:cutomer-transactions": "node dist/cutomer-transactions/server/server.mjs"
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "serve:prod": "http-server ./dist/customer-transactions"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +22,10 @@
     "@angular/platform-server": "^17.1.0",
     "@angular/router": "^17.1.0",
     "@angular/ssr": "^17.1.0",
+    "@swimlane/ngx-charts": "^20.5.0",
+    "bootstrap": "^5.3.3",
     "express": "^4.18.2",
+    "primeng": "^17.18.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
