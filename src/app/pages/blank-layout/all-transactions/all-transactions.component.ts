@@ -8,10 +8,19 @@ import { ITransactionsData } from '../../../shared/interfaces/itransactions-data
 import { ICustomerTransaction } from '../../../shared/interfaces/icustomertransactions';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @Component({
   selector: 'app-all-transactions',
   standalone: true,
-  imports: [TableModule, InputTextModule, CommonModule, DatePipe, FormsModule],
+  imports: [
+    TableModule,
+    InputTextModule,
+    CommonModule,
+    DatePipe,
+    FormsModule,
+    NgxChartsModule,
+  ],
   templateUrl: './all-transactions.component.html',
   styleUrl: './all-transactions.component.scss',
 })
@@ -22,6 +31,9 @@ export class AllTransactionsComponent implements OnInit {
   AllCustomers!: ICustomerData[];
   AllTransactions!: ITransactionsData[];
   customerTransactions!: ICustomerTransaction[];
+  currentCustomer: any = [];
+  isLightBoxOpen: boolean = false;
+
   constructor(
     private _CustomerTransactionsService: CustomerTransactionsService,
     private _TransactionsService: TransactionsService
@@ -72,4 +84,24 @@ export class AllTransactionsComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+  HandleCustomerData(customer: ICustomerData): void {
+    console.log(customer);
+    let AllTransactions = [...this.AllTransactions];
+    this.currentCustomer = [];
+    AllTransactions.forEach((ele) => {
+      if (ele.customer_id === customer.id) {
+        this.currentCustomer.push({
+          name: ele.date,
+          value: ele.amount,
+        });
+      }
+    });
+  }
+  toggleLightBox(): void {
+    this.isLightBoxOpen = !this.isLightBoxOpen;
+  }
+  StopProp(e: Event) {
+    e.stopPropagation();
+  }
+  view: [number, number] = [700, 400];
 }

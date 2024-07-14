@@ -44,11 +44,11 @@
         <th
           [pSortableColumnDisabled]="true"
           pSortableColumn="customer.name"
-          style="width: 30%"
+          style="width: 22.5%"
         >
           Name
         </th>
-        <th pSortableColumn="transaction.amount" style="width: 30%">
+        <th pSortableColumn="transaction.amount" style="width: 22.5%">
           Amount <p-sortIcon field="transaction.amount" />
           <p-columnFilter
             type="numeric"
@@ -57,9 +57,10 @@
             currency="USD"
           />
         </th>
-        <th pSortableColumn="transaction.date" style="width: 30%">
+        <th pSortableColumn="transaction.date" style="width: 22.5%">
           Date <p-sortIcon field="transaction.date" />
         </th>
+        <th style="width: 22.5%">Statics</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-customerTransactions>
@@ -72,8 +73,51 @@
         <td class="text-center">
           {{ customerTransactions.transaction.date | date : "MM/dd/yyyy" }}
         </td>
+        <td class="text-center">
+          <button
+            (click)="HandleCustomerData(customerTransactions.customer)"
+            (click)="toggleLightBox()"
+            class="btn btn-outline-primary text-uppercase"
+          >
+            <i class="pi pi-chart-bar fs-4 mx-1"></i>
+            Statics
+          </button>
+        </td>
       </tr>
     </ng-template>
   </p-table>
 </section>
+}
+<!-- Statics LightBox -->
+@if (isLightBoxOpen) {
+<!-- @if (true) { -->
+<div (click)="toggleLightBox()" class="LightBoxContainer">
+  <div
+    (click)="StopProp($event)"
+    class="LightBoxContent overflow-scroll card position-relative"
+  >
+    <button
+      (click)="toggleLightBox()"
+      class="btn-close position-absolute top-0 end-0 m-2"
+    ></button>
+    <div class="h-100 w-100 p-4">
+      <div class="text-center chart-container shadow-lg p-4 rounded-3">
+        <ngx-charts-bar-vertical
+          [view]="view"
+          [results]="currentCustomer"
+          [legendTitle]="'اجمالي الاحصائيات'"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [gradient]="true"
+          [showDataLabel]="true"
+          [animations]="false"
+        >
+        </ngx-charts-bar-vertical>
+      </div>
+    </div>
+  </div>
+</div>
 }
