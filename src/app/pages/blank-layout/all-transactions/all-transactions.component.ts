@@ -41,11 +41,13 @@ export class AllTransactionsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllCustromersData();
     this.getAllTransactionsData();
+    this.loadCustomerTransactions();
   }
   getAllCustromersData(): void {
     this._CustomerTransactionsService.getAllCustromersData().subscribe({
       next: (response) => {
         this.AllCustomers = response;
+        this.loadCustomerTransactions();
       },
       error: (error) => {
         console.log(error);

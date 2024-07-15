@@ -10,7 +10,7 @@ export class TransactionsService {
   constructor(private _HttpClient: HttpClient) {}
   getAllTransactionsData(): Observable<ITransactionsData[]> {
     return <Observable<ITransactionsData[]>>(
-      this._HttpClient.get('http://localhost:3000/transactions')
+      this._HttpClient.get('https://database-json-red.vercel.app/transactions')
     );
   }
 }
